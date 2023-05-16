@@ -5,10 +5,10 @@ using UnityEngine.SceneManagement;
 
 public class ButtonManager : MonoBehaviour
 {
-    // °ÔÀÓ Àç½ÃÀÛ
+    // ê²Œì„ ì¬ì‹œì‘
     public void Restart()
     {
-        // Main Scene ºÒ·¯¿À±â
+        // Main Scene ë¶ˆëŸ¬ì˜¤ê¸°
         SceneManager.LoadScene("MainScene");
     }
 }
