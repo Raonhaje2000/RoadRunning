@@ -4,28 +4,28 @@ using UnityEngine;
 
 public class PlayerMoveController : MonoBehaviour
 {
-    public float playerMoveSpeed; // ÇÃ·¹ÀÌ¾îÀÇ ¿òÁ÷ÀÓ ¼Óµµ
-    public float playerJumpSpeed; // ÇÃ·¹ÀÌ¾îÀÇ Á¡ÇÁ ¼Óµµ
-    public float playerRunSpeed;  // ÇÃ·¹ÀÌ¾îÀÇ ´Ş¸®±â ¼Óµµ
+    public float playerMoveSpeed; // í”Œë ˆì´ì–´ì˜ ì›€ì§ì„ ì†ë„
+    public float playerJumpSpeed; // í”Œë ˆì´ì–´ì˜ ì í”„ ì†ë„
+    public float playerRunSpeed;  // í”Œë ˆì´ì–´ì˜ ë‹¬ë¦¬ê¸° ì†ë„
 
-    float gravity = 9.8f;         // Áß·Â
-    float yVelocity = 0.0f;       // yÃà ¼Óµµ
+    float gravity = 9.8f;         // ì¤‘ë ¥
+    float yVelocity = 0.0f;       // yì¶• ì†ë„
 
-    Transform cameraPosition;     // Ä«¸Ş¶ó À§Ä¡
+    Transform cameraPosition;     // ì¹´ë©”ë¼ ìœ„ì¹˜
 
-    CharacterController cc;       // Ä³¸¯ÅÍ ÄÁÆ®·Ñ·¯
+    CharacterController cc;       // ìºë¦­í„° ì»¨íŠ¸ë¡¤ëŸ¬
 
-    Vector3 moveVector = Vector3.zero; // ÇÃ·¹ÀÌ¾îÀÇ ÀÌµ¿ ¹æÇâ * ÀÌµ¿ ¼Óµµ (MoveÀÇ ÀÎÀÚ)
+    Vector3 moveVector = Vector3.zero; // í”Œë ˆì´ì–´ì˜ ì´ë™ ë°©í–¥ * ì´ë™ ì†ë„ (Moveì˜ ì¸ì)
 
     void Start()
     {
-        // Ä³¸¯ÅÍ ÄÁÆ®·Ñ·¯ °¡Á®¿À±â
+        // ìºë¦­í„° ì»¨íŠ¸ë¡¤ëŸ¬ ê°€ì ¸ì˜¤ê¸°
         cc = this.GetComponent<CharacterController>();
 
-        // Ä«¸Ş¶ó°¡ ÀÖÀ» À§Ä¡ Á¤º¸ °¡Á®¿À±â
+        // ì¹´ë©”ë¼ê°€ ìˆì„ ìœ„ì¹˜ ì •ë³´ ê°€ì ¸ì˜¤ê¸°
         cameraPosition = GameObject.Find("CamPos").transform;
 
-        // º¯¼ö ÃÊ±âÈ­
+        // ë³€ìˆ˜ ì´ˆê¸°í™”
         playerMoveSpeed = 8.0f;
         playerJumpSpeed = 5.0f;
         playerRunSpeed = 12.0f;
@@ -33,72 +33,69 @@ public class PlayerMoveController : MonoBehaviour
 
     void Update()
     {
-        // ÇÃ·¹ÀÌ¾î ´Ş¸®±â
+        // í”Œë ˆì´ì–´ ë‹¬ë¦¬ê¸°
         PlayerRun();
     }
 
-    // Ä«¸Ş¶ó¿¡ ¿µÇâÀ» ÁÖ´Â ¾÷µ¥ÀÌÆ® ÇÔ¼ö
+    // ì¹´ë©”ë¼ì— ì˜í–¥ì„ ì£¼ëŠ” ì—…ë°ì´íŠ¸ í•¨ìˆ˜
     private void LateUpdate()
     {
-        // Ä«¸Ş¶ó À§Ä¡¸¦ Æ¯Á¤ À§Ä¡(Ä«¸Ş¶ó°¡ ÀÖÀ» À§Ä¡ Á¤º¸)¿Í µ¿ÀÏÇÏ°Ô Àû¿ë
+        // ì¹´ë©”ë¼ ìœ„ì¹˜ë¥¼ íŠ¹ì • ìœ„ì¹˜(ì¹´ë©”ë¼ê°€ ìˆì„ ìœ„ì¹˜ ì •ë³´)ì™€ ë™ì¼í•˜ê²Œ ì ìš©
         Camera.main.transform.position = cameraPosition.position;
     }
 
-    // ÇÃ·¹ÀÌ¾î ´Ş¸®±â (ÀÚµ¿ ÀÌµ¿)
+    // í”Œë ˆì´ì–´ ë‹¬ë¦¬ê¸° (ìë™ ì´ë™)
     void PlayerRun()
     {
-        // ¿ŞÂÊ Ctrl Å°¸¦ ´©¸£Áö ¾ÊÀ¸¸é ¾ÕÀ¸·Î ÀÚµ¿ ÀÌµ¿
+        // ì™¼ìª½ Ctrl í‚¤ë¥¼ ëˆ„ë¥´ì§€ ì•Šìœ¼ë©´ ì•ìœ¼ë¡œ ìë™ ì´ë™
         if (!Input.GetKey(KeyCode.LeftControl))
         {
-            // ÇÃ·¹ÀÌ¾î ¾ÕÀ¸·Î ÀÚµ¿ ÀÌµ¿
+            // í”Œë ˆì´ì–´ ì•ìœ¼ë¡œ ìë™ ì´ë™
             cc.Move(Vector3.forward * playerRunSpeed * Time.deltaTime);
 
-            // ÇÃ·¹ÀÌ¾î ÀÌµ¿ (¹æÇâÅ° »ç¿ë ÀÌµ¿)
+            // í”Œë ˆì´ì–´ ì´ë™ (ë°©í–¥í‚¤ ì‚¬ìš© ì´ë™)
             PlayerMove();
         }
         else
         {
-            // ÇÃ·¹ÀÌ¾î ¸ØÃß±â
+            // í”Œë ˆì´ì–´ ë©ˆì¶”ê¸°
             cc.Move(Vector3.zero);
         }
     }
 
-    // ÇÃ·¹ÀÌ¾î ÀÌµ¿ (¹æÇâÅ° »ç¿ë ÀÌµ¿)
+    // í”Œë ˆì´ì–´ ì´ë™ (ë°©í–¥í‚¤ ì‚¬ìš© ì´ë™)
     void PlayerMove()
     {
-        // Å°º¸µå Horizontal, Vertical ÀÔ·ÂÀ» °¢°¢ ¹Ş¾Æ¿È
+        // í‚¤ë³´ë“œ Horizontal, Vertical ì…ë ¥ì„ ê°ê° ë°›ì•„ì˜´
         float x = Input.GetAxis("Horizontal");
         float z = Input.GetAxis("Vertical");
 
-        // ÇÃ·¹ÀÌ¾îÀÇ ÀÌµ¿ ¹æÇâ Àû¿ë
+        // í”Œë ˆì´ì–´ì˜ ì´ë™ ë°©í–¥ ì ìš©
         moveVector.x = x;
         moveVector.y = -2.0f;
         moveVector.z = z;
 
-        // ·ÎÄÃÀÇ ÀÌµ¿º¤ÅÍ¸¦ ±Û·Î¹ú·Î º¯È¯
-        moveVector = transform.TransformDirection(moveVector);
-
-        // ÇÃ·¹ÀÌ¾îÀÇ ÀÌµ¿ ¼Óµµ Àû¿ë
+        // í”Œë ˆì´ì–´ì˜ ì´ë™ ì†ë„ ì ìš©
         moveVector *= playerMoveSpeed;
 
-        // ÇÃ·¹ÀÌ¾î Á¡ÇÁ
+        // í”Œë ˆì´ì–´ ì í”„
         //PlayerJump();
 
-        // ÇÃ·¹ÀÌ¾î ÀÌµ¿ Àû¿ë
+        // í”Œë ˆì´ì–´ ì´ë™ ì ìš©
         cc.Move(moveVector * Time.deltaTime);
     }
 
-    //ÇÃ·¹ÀÌ¾î Á¡ÇÁ
+    //í”Œë ˆì´ì–´ ì í”„
     void PlayerJump()
     {
-        // ¹Ù´Ú°ú Ãæµ¹ »óÅÂ¿¡¼­ Jump ¹öÆ°À» ´©¸¥ °æ¿ì
+        // ë°”ë‹¥ê³¼ ì¶©ëŒ ìƒíƒœì—ì„œ Jump ë²„íŠ¼ì„ ëˆ„ë¥¸ ê²½ìš°
         if (cc.isGrounded && Input.GetButtonDown("Jump"))
         {
-            // yÃà ¼Óµµ¸¦ ÇÃ·¹ÀÌ¾îÀÇ Á¡ÇÁ ¼Óµµ·Î º¯°æ
+            // yì¶• ì†ë„ë¥¼ í”Œë ˆì´ì–´ì˜ ì í”„ ì†ë„ë¡œ ë³€ê²½
             yVelocity = playerJumpSpeed;
         }
 
-        // yÃà ¹æÇâÀ¸·Î Áß·Â Àû¿ë (¹Ù´Ú¿¡ ´ê±â Àü±îÁö ¾Æ·¡·Î ¶³¾îÁöµµ·Ï)
+        // yì¶• ë°©í–¥ìœ¼ë¡œ ì¤‘ë ¥ ì ìš© (ë°”ë‹¥ì— ë‹¿ê¸° ì „ê¹Œì§€ ì•„ë˜ë¡œ ë–¨ì–´ì§€ë„ë¡)
         yVelocity -= (gravity * Time.deltaTime);
         moveVector.y = yVelocity;
     }
