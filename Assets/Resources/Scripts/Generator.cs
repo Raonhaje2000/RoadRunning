@@ -10,19 +10,19 @@ public class Generator : MonoBehaviour
 
     GameObject player;
 
-    int mapCount; // ½ÃÀÛ°ú ³¡À» Á¦¿ÜÇÑ ¸ÊÀÇ °³¼ö
+    int mapCount; // ì‹œì‘ê³¼ ëì„ ì œì™¸í•œ ë§µì˜ ê°œìˆ˜
 
     private void Awake()
     {
-        // °ü·Ã µ¥ÀÌÅÍ ·Îµå ¹× ÃÊ±âÈ­
+        // ê´€ë ¨ ë°ì´í„° ë¡œë“œ ë° ì´ˆê¸°í™”
         mapCount = 25;
 
-        LoadObjectResources();     // °ü·Ã ÇÁ¸®ÆÕ(¸®¼Ò½º) ·Îµå
-        InstantiateMapObject();    // ¸Ê ·£´ı »ı¼º
-        InstantiatePlayerObject(); // ÇÃ·¹ÀÌ¾î »ı¼º
+        LoadObjectResources();     // ê´€ë ¨ í”„ë¦¬íŒ¹(ë¦¬ì†ŒìŠ¤) ë¡œë“œ
+        InstantiateMapObject();    // ë§µ ëœë¤ ìƒì„±
+        InstantiatePlayerObject(); // í”Œë ˆì´ì–´ ìƒì„±
     }
 
-    // °ü·Ã ÇÁ¸®ÆÕ(¸®¼Ò½º) ·Îµå
+    // ê´€ë ¨ í”„ë¦¬íŒ¹(ë¦¬ì†ŒìŠ¤) ë¡œë“œ
     void LoadObjectResources()
     {
         randomMap = Resources.LoadAll<GameObject>("Prefabs/CityMap/Random");
@@ -32,37 +32,36 @@ public class Generator : MonoBehaviour
         player = Resources.Load<GameObject>("Prefabs/Player/Player");
     }
 
-    // ¸Ê ·£´ı »ı¼º
+    // ë§µ ëœë¤ ìƒì„±
     void InstantiateMapObject()
     {
-        float positionZ = 0.0f; // ´ÙÀ½¿¡ »ı¼ºµÉ ¸ÊÀÇ ZÃà À§Ä¡
+        float positionZ = 0.0f; // ë‹¤ìŒì— ìƒì„±ë  ë§µì˜ Zì¶• ìœ„ì¹˜
 
-        // ½ÃÀÛ ¸Ê »ı¼º
+        // ì‹œì‘ ë§µ ìƒì„±
         Instantiate(startMap, new Vector3(0.0f, 0.0f, positionZ), Quaternion.identity);
-
-        // ÀÏÁ¤ °Å¸®¸¶´Ù ¸Ê »ı¼º
-        for(int i = 0; i < mapCount; i++)
-        {
-            positionZ += 39.5f; // 39.5´Â ¸Ê ÇÏ³ªÀÇ zÃà ±æÀÌ
-
-            // ¸Ê ÇÁ¸®ÆÕ Áß¿¡¼­ ·£´ıÇÏ°Ô ÇÏ³ª »Ì¾Æ¼­ ¸Ê »ı¼º
-            int mapIndex = Random.Range(0, randomMap.Length);
-            Instantiate(randomMap[mapIndex], new Vector3(0.0f, 0.0f, positionZ), Quaternion.identity);
-        }
-
         positionZ += 39.5f;
 
-        // ³¡ ¸Ê »ı¼º
+        // ì¼ì • ê±°ë¦¬ë§ˆë‹¤ ë§µ ìƒì„±
+        for(int i = 0; i < mapCount; i++)
+        {
+            // ë§µ í”„ë¦¬íŒ¹ ì¤‘ì—ì„œ ëœë¤í•˜ê²Œ í•˜ë‚˜ ë½‘ì•„ì„œ ë§µ ìƒì„±
+            int mapIndex = Random.Range(0, randomMap.Length);
+            Instantiate(randomMap[mapIndex], new Vector3(0.0f, 0.0f, positionZ), Quaternion.identity);
+            
+            positionZ += 39.5f; // 39.5ëŠ” ë§µ í•˜ë‚˜ì˜ zì¶• ê¸¸ì´
+        }
+        
+        // ë ë§µ ìƒì„±
         Instantiate(endMap, new Vector3(0.0f, 0.0f, positionZ), Quaternion.identity);
     }
 
-    // ÇÃ·¹ÀÌ¾î »ı¼º
+    // í”Œë ˆì´ì–´ ìƒì„±
     void InstantiatePlayerObject()
     {
-        // ½ÃÀÛ ¸Ê¿¡¼­ ÇÃ·¹ÀÌ¾î°¡ ½ºÆùµÇ´Â ÁöÁ¡ Á¤º¸ ·Îµå
+        // ì‹œì‘ ë§µì—ì„œ í”Œë ˆì´ì–´ê°€ ìŠ¤í°ë˜ëŠ” ì§€ì  ì •ë³´ ë¡œë“œ
         Transform playerSpawnPoint = GameObject.Find("StartPoint").transform;
 
-        // ÇÃ·¹ÀÌ¾î ½ºÆù
+        // í”Œë ˆì´ì–´ ìŠ¤í°
         Instantiate(player, playerSpawnPoint.position, playerSpawnPoint.rotation);
     }
 }
