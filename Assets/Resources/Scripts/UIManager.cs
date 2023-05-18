@@ -7,17 +7,17 @@ public class UIManager : MonoBehaviour
 {
     public static UIManager instance;
 
-    public ProgressBar playerHpBar;     // ÇÃ·¹ÀÌ¾îÀÇ HP UI
+    public ProgressBar playerHpBar;     // í”Œë ˆì´ì–´ì˜ HP UI
 
-    public GameObject gameOver;         // Game Over µÇ¾úÀ» ¶§ÀÇ È­¸é
-    public GameObject arrival;          // µµÂø ÇßÀ» ¶§ÀÇ È­¸é
+    public GameObject gameOver;         // Game Over ë˜ì—ˆì„ ë•Œì˜ í™”ë©´
+    public GameObject arrival;          // ë„ì°© í–ˆì„ ë•Œì˜ í™”ë©´
 
-    public Text timerText;              // Å¸ÀÌ¸Ó ±ÛÀÚ
+    public Text timerText;              // íƒ€ì´ë¨¸ ê¸€ì
 
-    public Text remainingDistanceText;  // ³²Àº °Å¸® ±ÛÀÚ
-    public ProgressBar distanceBar;     // °Å¸® Ç¥±â UI
+    public Text remainingDistanceText;  // ë‚¨ì€ ê±°ë¦¬ ê¸€ì
+    public ProgressBar distanceBar;     // ê±°ë¦¬ í‘œê¸° UI
 
-    public Text arrivalTimeText;        // µµÂøÇÑ ½Ã°£ ±ÛÀÚ
+    public Text arrivalTimeText;        // ë„ì°©í•œ ì‹œê°„ ê¸€ì
 
     private void Awake()
     {
@@ -29,29 +29,30 @@ public class UIManager : MonoBehaviour
 
     void Start()
     {
-        // È­¸é ºñÈ°¼ºÈ­
+        // í™”ë©´ ë¹„í™œì„±í™”
         gameOver.SetActive(false);
         arrival.SetActive(false);
     }
 
-    // ÇÃ·¹ÀÌ¾îÀÇ HP UI ¾÷µ¥ÀÌÆ®
+    // í”Œë ˆì´ì–´ì˜ HP UI ì—…ë°ì´íŠ¸
     public void UpdatePlayerHpBarUI()
     {
         playerHpBar.BarValue = GameManager.instance.playerCurrentHp / GameManager.instance.playerMaxHp * 100.0f;
     }
 
-    // Å¸ÀÌ¸Ó UIÀÇ ±ÛÀÚ ¾÷µ¥ÀÌÆ®
+    // íƒ€ì´ë¨¸ UIì˜ ê¸€ì ì—…ë°ì´íŠ¸
     public void UpdateTimerText(int min, int sec, int msec)
     {
         timerText.text = string.Format("{0:D2}:{1:D2}.{2:D3}", min, sec, msec);
 
+        // í”Œë ˆì´ì–´ê°€ ë„ì°©í•´ì„œ ë„ì°©í•œ ì‹œê°„ ê¸€ìê°€ í™œì„±í™” ë˜ì—ˆì„ ë•Œë§Œ ì—…ë°ì´íŠ¸
         if (arrivalTimeText.IsActive())
         {
             arrivalTimeText.text = string.Format("{0:D2}:{1:D2}.{2:D3}", min, sec, msec);
         }
     }
 
-    // °Å¸® Ç¥±â UI ¾÷µ¥ÀÌÆ®
+    // ê±°ë¦¬ í‘œê¸° UI ì—…ë°ì´íŠ¸
     public void UpdateDistance(float distance, float remainingDistance)
     {
         remainingDistanceText.text = string.Format("Remaining Distance : {0:D4} m", (int) Mathf.Floor(remainingDistance));
@@ -59,17 +60,17 @@ public class UIManager : MonoBehaviour
         distanceBar.BarValue = (distance - remainingDistance) / distance * 100.0f;
     }
 
-    // Game Over È­¸é º¸¿©ÁÖ±â
+    // Game Over í™”ë©´ ë³´ì—¬ì£¼ê¸°
     public void ShowGameOver()
     {
-        // Game Over µÇ¾úÀ» ¶§ÀÇ È­¸é È°¼ºÈ­
+        // Game Over ë˜ì—ˆì„ ë•Œì˜ í™”ë©´ í™œì„±í™”
         gameOver.SetActive(true);
     }
 
-    // µµÂø È­¸é º¸¿©ÁÖ±â
+    // ë„ì°© í™”ë©´ ë³´ì—¬ì£¼ê¸°
     public void ShowArrival()
     {
-        // µµÂø ÇßÀ» ¶§ÀÇ È­¸é È°¼ºÈ­
+        // ë„ì°© í–ˆì„ ë•Œì˜ í™”ë©´ í™œì„±í™”
         arrival.SetActive(true);
     }
 }
